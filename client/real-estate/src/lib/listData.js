@@ -1,0 +1,136 @@
+export const listData = [
+  {
+    id: 1,
+    title: "Căn Hộ Tuyệt Vời Gần Biển!",
+    images: [
+      "https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 2,
+    bathroom: 1,
+    price: 9150000000,
+    address: "456 Đường Trần Phú, Nha Trang",
+    latitude: 12.2387911,
+    longitude: 109.1967499,
+  },
+  {
+    id: 2,
+    title: "Căn Hộ Tuyệt Vời Gần Công Viên!",
+    images: [
+      "https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 3,
+    bathroom: 2,
+    price: 5500000000,
+    address: "789 Đường Phạm Văn Đồng, Hà Nội",
+    latitude: 21.028511,
+    longitude: 105.804817,
+  },
+  {
+    id: 3,
+    title: "Căn Hộ Mới Trong Thành Phố!",
+    images: [
+      "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 1,
+    bathroom: 1,
+    price: 12850000000,
+    address: "101 Đường Nguyễn Huệ, TP.HCM",
+    latitude: 10.7758439,
+    longitude: 106.703386,
+  },
+  {
+    id: 4,
+    title: "Vị Trí Tuyệt Vời! Giá Tốt! Căn Hộ Tuyệt Vời!",
+    images: [
+      "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 2,
+    bathroom: 1,
+    price: 3355000000,
+    address: "234 Đường Lê Lợi, Đà Nẵng",
+    latitude: 16.047079,
+    longitude: 108.20623,
+  },
+  {
+    id: 5,
+    title: "Căn Hộ 5",
+    images: [
+      "https://images.pexels.com/photos/276625/pexels-photo-276625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 3,
+    bathroom: 2,
+    price: 3750000000,
+    address: "567 Đường Nguyễn Văn Linh, Hải Phòng",
+    latitude: 20.844912,
+    longitude: 106.688084,
+  },
+  {
+    id: 6,
+    title: "Căn Hộ 6",
+    images: [
+      "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 1,
+    bathroom: 1,
+    price: 7380000000,
+    address: "890 Đường Cách Mạng Tháng 8, Cần Thơ",
+    latitude: 10.045162,
+    longitude: 105.746857,
+  },
+  {
+    id: 7,
+    title: "Căn Hộ 7",
+    images: [
+      "https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 2,
+    bathroom: 1,
+    price: 11480000000,
+    address: "112 Đường Bạch Đằng, Đà Nẵng",
+    latitude: 16.074213,
+    longitude: 108.221579,
+  },
+  {
+    id: 8,
+    title: "Căn Hộ 8",
+    images: [
+      "https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
+    bedroom: 3,
+    bathroom: 2,
+    price: 15750000000,
+    address: "8765 Đường Hai Bà Trưng, TP.HCM",
+    latitude: 10.776947,
+    longitude: 106.700981,
+  },
+];
+
+export const singlePostData = {
+  id: 1,
+  title: "Căn Hộ Đẹp",
+  price: 1200,
+  images: [
+    "https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  ],
+  bedRooms: 2,
+  bathroom: 1,
+  size: 861,
+  latitude: 21.028511,
+  longitude: 105.804817,
+  city: "Hà Nội",
+  address: "1234 Đường Cầu Giấy",
+  school: "cách 250m",
+  bus: "cách 100m",
+  restaurant: "cách 50m",
+  description:
+    "Căn hộ tuyệt đẹp với đầy đủ tiện nghi, vị trí đắc địa gần trường học, trạm xe buýt và nhà hàng. Thiết kế hiện đại, phù hợp với phong cách sống đô thị.",
+};
+
+export const userData = {
+  id: 1,
+  name: "Nguyễn Văn A",
+  img: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+};

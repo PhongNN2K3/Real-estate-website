@@ -1,0 +1,84 @@
+.listItem {
+  display: flex;
+
+  .imageContainer {
+    flex: 2;
+
+    img {
+      width: 250px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+  .textContainer {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .listText {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+
+      .address {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+        color: #666;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 18px;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        background-color: #ffe79e;
+        border-radius: 3px;
+        width: fit-content;
+        height: auto;
+      }
+    }
+    .bottom {
+      display: flex;
+
+      .features {
+        display: flex;
+        flex: 3;
+        justify-content: space-between;
+
+        .icon {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 5px;
+          background-color: #e9e9e9;
+          border-radius: 5px;
+          width: auto;
+          font-size: 14px;
+        }
+      }
+      .icons {
+        display: flex;
+        flex: 2;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+
+        .icon {
+          width: 28px;
+          height: 28px;
+          cursor: pointer;
+          border: solid 1px #afafaf;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
