@@ -108,16 +108,16 @@ export const listData = [
 export const singlePostData = {
   id: 1,
   title: "Căn Hộ Đẹp",
-  price: 1200,
+  price: 8500000000,
   images: [
     "https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     "https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   ],
-  bedRooms: 2,
+  bedroom: 2,
   bathroom: 1,
-  size: 861,
+  size: 120,
   latitude: 21.028511,
   longitude: 105.804817,
   city: "Hà Nội",
@@ -126,7 +126,7 @@ export const singlePostData = {
   bus: "cách 100m",
   restaurant: "cách 50m",
   description:
-    "Căn hộ tuyệt đẹp với đầy đủ tiện nghi, vị trí đắc địa gần trường học, trạm xe buýt và nhà hàng. Thiết kế hiện đại, phù hợp với phong cách sống đô thị.",
+    "Căn hộ tuyệt đẹp với đầy đủ tiện nghi, vị trí đắc địa gần trường học, trạm xe buýt và nhà hàng. Thiết kế hiện đại, phù hợp với phong cách sống đô thị. Không gian sống lý tưởng cho gia đình trẻ năng động, hoặc những cá nhân độc lập yêu thích sự tiện nghi và hiện đại. Cơ hội sở hữu một chốn an cư lý tưởng, mang đến cuộc sống tiện nghi và đầy đủ tiện ích ngay giữa lòng thành phố. Hệ thống an ninh hiện đại, đảm bảo an toàn cho bạn và gia đình. Với mức giá hấp dẫn, căn hộ này là lựa chọn hoàn hảo cho những ai đang tìm kiếm một không gian sống chất lượng cao, tiện nghi và đầy đủ tiện ích. Tận hưởng cuộc sống tiện nghi và hiện đại với đầy đủ tiện ích như bể bơi, phòng tập gym, khu vui chơi trẻ em, vườn hoa, v.v. Hãy liên hệ ngay với chúng tôi để được tư vấn và sở hữu căn hộ mơ ước của bạn!",
 };
 
 export const userData = {

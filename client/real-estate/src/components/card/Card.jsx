@@ -60,6 +60,5 @@ const Card = ({ item }) => {
     </div>
   );
 };
-//AIzaSyBykQJddFqM-QauSobpa_CI_GS6fqW3eOc
 
 export default Card;

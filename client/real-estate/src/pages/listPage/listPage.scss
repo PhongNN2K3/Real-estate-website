@@ -1,12 +1,22 @@
+@import "../../responsive.scss";
+
 .listPage {
   display: flex;
   height: 100%;
+  @include md {
+    flex-direction: column;
+    overflow-y: auto;
+  }
 
   .listContainer {
     flex: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
+    @include md {
+      flex: none;
+      height: 100%;
+    }
 
     .wrapper {
       overflow-y: auto;
@@ -17,6 +27,10 @@
       gap: 40px;
       justify-content: space-between;
       padding-bottom: 50px;
+      @include md {
+        max-height: fit-content;
+        padding-right: 10px;
+      }
 
       &::-webkit-scrollbar {
         width: 8px;
@@ -37,6 +51,12 @@
   }
   .mapContainer {
     flex: 2;
-    background-color: #fff9f9;
+    background-color: #fcf0f0;
+    margin-left: 10px;
+    height: 100%;
+    @include md {
+      flex: none;
+      display: none;
+    }
   }
 }

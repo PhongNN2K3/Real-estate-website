@@ -38,6 +38,11 @@
       justify-content: space-between;
       gap: 20px;
       width: 100%;
+      flex-wrap: wrap;
+      @include md {
+        justify-content: flex-start;
+        gap: 30px;
+      }
 
       .item {
         display: flex;
@@ -47,7 +52,7 @@
 
         input,
         select {
-          width: 100px;
+          width: 90px;
           padding: 10px;
           border-radius: 5px;
           border: solid 1px #afafaf;

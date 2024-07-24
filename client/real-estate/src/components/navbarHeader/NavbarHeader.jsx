@@ -7,6 +7,7 @@ import "./navbarHeader.scss";
 
 const NavbarHeader = () => {
   const [show, setShow] = useState(false);
+  const user = true;
 
   return (
     <div className="header">
@@ -26,16 +27,13 @@ const NavbarHeader = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto nav-items">
                 <Nav.Link as={Link} to="/">
-                  Home
+                  Trang chủ
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/about"}>
-                  About
+                  Giới thiệu
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/contact"}>
-                  Contact
-                </Nav.Link>
-                <Nav.Link as={Link} to={"/agents"}>
-                  Agents
+                  Liên hệ
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -43,14 +41,30 @@ const NavbarHeader = () => {
         </Navbar>
       </div>
       <div className="right">
-        <Nav className="me-auto nav-items">
-          <Nav.Link as={Link} to="/login">
-            Sign in
-          </Nav.Link>
-          <Nav.Link className="sign-up" as={Link} to="/signup">
-            Sign up
-          </Nav.Link>
-        </Nav>
+        {user ? (
+          <Nav className="me-auto user-nav-items">
+            <img
+              className="avatar"
+              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            />
+            <span className="username">John Dee</span>
+            <Nav.Link className="profile-container" as={Link} to="/profile">
+              <div className="profile">
+                <div className="notification">3</div>
+                <span>Profile</span>
+              </div>
+            </Nav.Link>
+          </Nav>
+        ) : (
+          <Nav className="me-auto nav-items">
+            <Nav.Link className="sign-in" as={Link} to="/login">
+              Đăng nhập
+            </Nav.Link>
+            <Nav.Link className="sign-up" as={Link} to="/signup">
+              Đăng ký
+            </Nav.Link>
+          </Nav>
+        )}
         <div className="menu-icon">
           <IconContext.Provider value={{ size: "32px" }}>
             {show ? (
@@ -73,9 +87,6 @@ const NavbarHeader = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               Contact
-            </Nav.Link>
-            <Nav.Link as={Link} to="/agents">
-              Agents
             </Nav.Link>
             <Nav.Link as={Link} to="/login">
               Sign in

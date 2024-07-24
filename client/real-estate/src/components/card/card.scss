@@ -1,14 +1,34 @@
+@import "../../responsive.scss";
+
 .listItem {
   display: flex;
 
+  @include md {
+    flex-direction: row;
+  }
+  @include sm {
+    flex-direction: column;
+  }
+
   .imageContainer {
     flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
       width: 250px;
       height: 150px;
       object-fit: cover;
       border-radius: 8px;
+      @include lg {
+        width: 220px;
+        height: 150px;
+      }
+      @include sm {
+        width: 90%;
+        height: 180px;
+      }
     }
   }
   .textContainer {
@@ -17,11 +37,21 @@
     flex-direction: column;
     justify-content: space-between;
 
+    @include md {
+      width: 60%;
+    }
+    @include sm {
+      width: 90%;
+      margin-top: 10px;
+      margin-left: 30px;
+    }
+
     .listText {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 20px;
+      margin-bottom: 20px;
 
       .address {
         display: flex;
@@ -49,6 +79,9 @@
         display: flex;
         flex: 3;
         justify-content: space-between;
+        @include sm {
+          flex: 5;
+        }
 
         .icon {
           display: flex;
@@ -67,6 +100,9 @@
         align-items: center;
         justify-content: flex-end;
         gap: 20px;
+        @include sm {
+          flex: 2;
+        }
 
         .icon {
           width: 28px;
