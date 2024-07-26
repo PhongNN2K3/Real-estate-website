@@ -1,30 +1,51 @@
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 import "./profile.scss";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const { currentUser, updateUser } = useContext(AuthContext);
+  const handleLogout = async () => {
+    try {
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="profile">
       <div className="details">
         <div className="wrapper">
           <div className="title">
             <h1>Profile</h1>
-            <div>Cập nhật profile</div>
+            <Link to="/updateProfile">
+              <div className="btn">Cập nhật profile</div>
+            </Link>
           </div>
           <div className="info">
-            <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+            <img src={currentUser.avatar || "../../../noAvatar.png"} />
             <div className="text">
               <span>
-                User name: <p>John Dee</p>
+                User name: <p>{currentUser.username}</p>
               </span>
               <span>
-                Email: <p>YF5vT@example.com</p>
+                Email: <p>{currentUser.email}</p>
               </span>
+              <div onClick={handleLogout} className="btn">
+                Đăng xuất
+              </div>
             </div>
           </div>
           <div className="title">
             <h1>Danh sách của tôi</h1>
-            <div>Thêm bài đăng</div>
+            <div className="btn">Thêm bài đăng</div>
           </div>
           <List />
           <div className="title">

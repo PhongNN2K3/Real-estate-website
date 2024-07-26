@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import "./navbarHeader.scss";
 
 const NavbarHeader = () => {
   const [show, setShow] = useState(false);
-  const user = true;
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="header">
@@ -41,13 +42,13 @@ const NavbarHeader = () => {
         </Navbar>
       </div>
       <div className="right">
-        {user ? (
+        {currentUser ? (
           <Nav className="me-auto user-nav-items">
             <img
               className="avatar"
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              src={currentUser.avatar || "../../../noAvatar.png"}
             />
-            <span className="username">John Dee</span>
+            <span className="username">{currentUser.username}</span>
             <Nav.Link className="profile-container" as={Link} to="/profile">
               <div className="profile">
                 <div className="notification">3</div>
@@ -60,7 +61,7 @@ const NavbarHeader = () => {
             <Nav.Link className="sign-in" as={Link} to="/login">
               Đăng nhập
             </Nav.Link>
-            <Nav.Link className="sign-up" as={Link} to="/signup">
+            <Nav.Link className="sign-up" as={Link} to="/register">
               Đăng ký
             </Nav.Link>
           </Nav>
