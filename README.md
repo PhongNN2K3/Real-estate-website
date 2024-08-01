@@ -1,3 +1,6 @@
+# Giao diện trang đăng ký và đăng nhập
+![Screenshot (134)](https://github.com/user-attachments/assets/1aaf97b3-6c9e-4944-b140-3742f02a1f83)
+![Screenshot (133)](https://github.com/user-attachments/assets/5e052f3e-5a46-4100-a5e6-743eeaefa45f)
 # Giao diện trang chủ
 ![Screenshot (128)](https://github.com/user-attachments/assets/ec6cfd84-6905-41e4-b39a-5a1eab0edef8)
 # Giao diện danh sách cái bài post
