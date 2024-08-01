@@ -7,7 +7,7 @@ import "./updateProfile.scss";
 
 const UpdateProfile = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+  const [avatar, setAvatar] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ const UpdateProfile = () => {
       </div>
       <div className="sideContainer">
         <img
-          src={avatar || "../../../noAvatar.png"}
+          src={avatar[0] || currentUser.avatar || "../../../noAvatar.png"}
           alt=""
           className="avatar"
         />
@@ -84,9 +84,9 @@ const UpdateProfile = () => {
             showPoweredBy: false,
             showAdvancedOptions: true,
             folder: "avatars",
-            acceptFileTypes: /(\.|\/)(jpeg|jpg|png)$/i,
+            clientAllowedFormats: ["png", "jpg", "jpeg"],
           }}
-          setAvatar={setAvatar}
+          setState={setAvatar}
         />
       </div>
     </div>

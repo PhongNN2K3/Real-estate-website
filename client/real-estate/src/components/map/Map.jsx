@@ -4,11 +4,13 @@ import Pin from "../pin/Pin";
 import "./map.scss";
 
 const Map = ({ items }) => {
-  const center = {
-    lat: 10.8231,
-    lng: 106.6297,
-  };
-
+  const center =
+    items.length === 1
+      ? { lat: items[0].latitude, lng: items[0].longitude }
+      : {
+          lat: 10.8231,
+          lng: 106.6297,
+        };
   return (
     <MapContainer
       center={center}

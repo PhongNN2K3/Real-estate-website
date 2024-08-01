@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import { IconContext } from "react-icons";
 import { CiBookmark } from "react-icons/ci";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -10,12 +11,13 @@ import {
 import { LiaBathSolid, LiaBedSolid, LiaToolsSolid } from "react-icons/lia";
 import { LuSchool } from "react-icons/lu";
 import { PiChatDotsThin, PiMapPinLine } from "react-icons/pi";
+import { useLoaderData } from "react-router-dom";
 import Map from "../../components/map/Map";
 import Slider from "../../components/slider/Slider";
-import { singlePostData, userData } from "../../lib/listData";
 import "./singlePage.scss";
 
 const SinglePage = () => {
+  const post = useLoaderData();
   const vndCurrentcy = (number) => {
     const formatter = new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -29,27 +31,30 @@ const SinglePage = () => {
     <div className="singlePage">
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
+                <h1>{post.title}</h1>
                 <IconContext.Provider value={{ size: "20px" }}>
                   <div className="address">
                     <PiMapPinLine />
-                    <span>{singlePostData.address}</span>
+                    <span>{post.address}</span>
                   </div>
                 </IconContext.Provider>
-                <div className="price">
-                  {vndCurrentcy(singlePostData.price)}
-                </div>
+                <div className="price">{vndCurrentcy(post.price)}</div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                <img src={post.avatar} alt="" />
+                <span>{post.username}</span>
               </div>
             </div>
-            <div className="bottom">{singlePostData.description}</div>
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(post.postDetail.description),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -62,21 +67,25 @@ const SinglePage = () => {
                 <LiaToolsSolid />
                 <div className="featureText">
                   <span>Tiện ích</span>
-                  <p>Người thuê chịu trách nhiệm</p>
+                  <p>{post.postDetail.utilities ?? "Không có"}</p>
                 </div>
               </div>
               <div className="feature">
                 <IoPawOutline />
                 <div className="featureText">
                   <span>Nuôi thú cưng</span>
-                  <p>Được cho phép</p>
+                  <p>
+                    {post.postDetail.pet === "allowed"
+                      ? "Được cho phép"
+                      : "Không cho phép"}
+                  </p>
                 </div>
               </div>
               <div className="feature">
                 <FaRegMoneyBillAlt />
                 <div className="featureText">
                   <span>Phí quản lý</span>
-                  <p>Phí quản lý sẽ đóng theo quy định của nhà nước</p>
+                  <p>{post.postDetail.fee ?? "Không có"}</p>
                 </div>
               </div>
             </div>
@@ -84,15 +93,15 @@ const SinglePage = () => {
             <div className="size">
               <div className="feature">
                 <IoMdOpen />
-                <span>{`${singlePostData.size} m²`}</span>
+                <span>{`${post.postDetail.size} m²`}</span>
               </div>
               <div className="feature">
                 <LiaBedSolid />
-                <span>{singlePostData.bedroom} phòng ngủ</span>
+                <span>{post.postDetail.bedroom} phòng ngủ</span>
               </div>
               <div className="feature">
                 <LiaBathSolid />
-                <span>{singlePostData.bathroom} phòng tắm</span>
+                <span>{post.postDetail.bathroom} phòng tắm</span>
               </div>
             </div>
             <p className="title">Cơ sở hạ tầng</p>
@@ -101,28 +110,28 @@ const SinglePage = () => {
                 <LuSchool />
                 <div className="featureText">
                   <span>Trường học</span>
-                  <p>{singlePostData.school}</p>
+                  <p>cách {post.postDetail.school} km</p>
                 </div>
               </div>
               <div className="feature">
                 <IoBusOutline />
                 <div className="featureText">
                   <span>Trạm xe buýt</span>
-                  <p>{singlePostData.bus}</p>
+                  <p>cách {post.postDetail.bus} km</p>
                 </div>
               </div>
               <div className="feature">
                 <IoRestaurantOutline />
                 <div className="featureText">
                   <span>Nhà hàng</span>
-                  <p>{singlePostData.restaurant}</p>
+                  <p>cách {post.postDetail.restaurant} km</p>
                 </div>
               </div>
             </div>
           </IconContext.Provider>
           <p className="title">Địa điểm</p>
           <div className="mapContainer">
-            <Map items={[singlePostData]} />
+            <Map items={[post]} />
           </div>
           <IconContext.Provider value={{ size: "24px" }}>
             <div className="buttons">

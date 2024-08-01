@@ -2,18 +2,23 @@ import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { BsSearch } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import "./searchBar.scss";
 
 const Searchbar = () => {
-  const types = ["Mua", "Thuê"];
+  const types = ["buy", "rent"];
   const [query, setQuery] = useState({
     type: types[0],
-    location: "",
-    minPrice: 0,
-    maxPrice: 0,
+    city: "",
+    minPrice: "",
+    maxPrice: "",
   });
-  const handleTypeChange = (val) => {
-    setQuery({ ...query, type: val });
+
+  const switchType = (val) => {
+    setQuery((prev) => ({ ...prev, type: val }));
+  };
+  const handleChange = (e) => {
+    setQuery((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const tabRef = useRef();
@@ -30,24 +35,28 @@ const Searchbar = () => {
     <div className="searchbar">
       <div className="type">
         {types.map((type) => (
-          <div
-            key={type}
-            className={type}
-            onClick={() => handleTypeChange(type)}
-          >
-            <p>{type}</p>
+          <div key={type} className={type} onClick={() => switchType(type)}>
+            <p>{type === "buy" ? "Mua" : "Thuê"}</p>
             <div ref={tabRef} className="line"></div>
           </div>
         ))}
       </div>
       <Form id="form">
-        <Form.Control className="location" type="text" placeholder="Địa chỉ" />
+        <Form.Control
+          className="city"
+          type="text"
+          placeholder="Thành phố"
+          name="city"
+          onChange={handleChange}
+        />
         <Form.Control
           type="number"
           min="0"
           max="100000000000"
           step="1000"
           placeholder="Giá thấp nhất"
+          name="minPrice"
+          onChange={handleChange}
         />
         <Form.Control
           type="number"
@@ -55,12 +64,17 @@ const Searchbar = () => {
           max="100000000000"
           step="1000"
           placeholder="Giá cao nhất"
+          name="maxPrice"
+          onChange={handleChange}
         />
-        <button className="search">
+        <Link
+          to={`/list?type=${query.type}&city=${query.city}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}`}
+          className="search"
+        >
           <IconContext.Provider value={{ color: "white", size: "24px" }}>
             <BsSearch />
           </IconContext.Provider>
-        </button>
+        </Link>
       </Form>
     </div>
   );

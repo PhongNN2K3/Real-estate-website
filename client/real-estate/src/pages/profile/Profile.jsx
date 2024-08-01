@@ -18,6 +18,7 @@ const Profile = () => {
       console.log(error);
     }
   };
+  console.log(currentUser);
 
   return (
     <div className="profile">
@@ -25,7 +26,7 @@ const Profile = () => {
         <div className="wrapper">
           <div className="title">
             <h1>Profile</h1>
-            <Link to="/updateProfile">
+            <Link to="/profile/update">
               <div className="btn">Cập nhật profile</div>
             </Link>
           </div>
@@ -45,7 +46,9 @@ const Profile = () => {
           </div>
           <div className="title">
             <h1>Danh sách của tôi</h1>
-            <div className="btn">Thêm bài đăng</div>
+            <Link to="/add">
+              <div className="btn">Thêm bài đăng</div>
+            </Link>
           </div>
           <List />
           <div className="title">
