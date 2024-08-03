@@ -138,16 +138,24 @@
     .wrapper {
       margin: 0 20px;
       margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
 
       .title {
         font-size: 18px;
         font-weight: bold;
       }
+      .noValue {
+        font-size: 14px;
+        background-color: #fff;
+        width: fit-content;
+        padding: 5px 10px;
+      }
       .general {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin: 5px 0 10px 0;
         font-size: 14px;
         background-color: #fff;
         padding: 5px;
@@ -159,6 +167,10 @@
           display: flex;
           align-items: center;
           gap: 10px;
+
+          .icon {
+            width: 20px;
+          }
 
           .featureText {
             display: flex;
@@ -174,7 +186,6 @@
         display: flex;
         justify-content: space-between;
         gap: 20px;
-        margin: 5px 0 10px 0;
         font-size: 14px;
         @include sm {
           font-size: 12px;
@@ -196,7 +207,6 @@
         display: flex;
         justify-content: space-between;
         gap: 20px;
-        margin: 5px 0 10px 0;
         background-color: #fff;
         padding: 5px;
 

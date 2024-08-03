@@ -19,7 +19,7 @@ const Card = ({ item }) => {
   return (
     <div className="listItem">
       <Link to={`/${item.id}`} className="imageContainer">
-        <img src={item.images[0]} alt="" />
+        <img src={item.images[0] ?? "../../../noImage.png"} alt="" />
       </Link>
       <div className="textContainer">
         <IconContext.Provider value={{ size: "20px" }}>

@@ -6,6 +6,7 @@ const CloudinaryScriptContext = createContext();
 
 function UploadWidget({ uwConfig, setState }) {
   const [loaded, setLoaded] = useState(false);
+  const [widget, setWidget] = useState(null);
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -26,9 +27,10 @@ function UploadWidget({ uwConfig, setState }) {
     }
   }, [loaded]);
 
-  const initializeCloudinaryWidget = () => {
-    if (loaded) {
-      var myWidget = window.cloudinary.createUploadWidget(
+  useEffect(() => {
+    if (loaded && !widget) {
+      // Initialize Cloudinary Widget when script is loaded
+      const myWidget = window.cloudinary.createUploadWidget(
         uwConfig,
         (error, result) => {
           if (!error && result && result.event === "success") {
@@ -37,14 +39,13 @@ function UploadWidget({ uwConfig, setState }) {
           }
         }
       );
+      setWidget(myWidget);
+    }
+  }, [loaded, uwConfig, setState, widget]);
 
-      document.getElementById("upload_widget").addEventListener(
-        "click",
-        function () {
-          myWidget.open();
-        },
-        false
-      );
+  const handleUploadClick = () => {
+    if (widget) {
+      widget.open();
     }
   };
 
@@ -53,7 +54,7 @@ function UploadWidget({ uwConfig, setState }) {
       <button
         id="upload_widget"
         className="cloudinary-button"
-        onClick={initializeCloudinaryWidget}
+        onClick={handleUploadClick}
       >
         Tải lên
       </button>

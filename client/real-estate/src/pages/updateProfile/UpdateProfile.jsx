@@ -28,7 +28,6 @@ const UpdateProfile = () => {
       updateUser(res.data);
       navigate("/profile");
     } catch (error) {
-      console.log(error);
       setError(error.response.data.message);
     } finally {
       setLoading(false);

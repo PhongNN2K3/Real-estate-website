@@ -1,6 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Layout, RequiredAuthLayout } from "./components/layout/Layout";
-import { listPageLoader, singlePageLoader } from "./lib/loaders";
+import {
+  listPageLoader,
+  profilePageLoader,
+  singlePageLoader,
+} from "./lib/loaders";
 import Home from "./pages/home/Home";
 import ListPage from "./pages/listPage/ListPage";
 import Login from "./pages/login/Login";
@@ -27,7 +31,7 @@ function App() {
       path: "/",
       element: <RequiredAuthLayout />,
       children: [
-        { path: "/profile", element: <Profile /> },
+        { path: "/profile", element: <Profile />, loader: profilePageLoader },
         { path: "/profile/update", element: <UpdateProfile /> },
         { path: "/add", element: <NewPostPage /> },
       ],

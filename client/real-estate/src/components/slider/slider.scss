@@ -21,6 +21,26 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      position: relative;
+
+      &.disabled {
+        cursor: default;
+
+        &:hover::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 30px;
+          height: 30px;
+          opacity: 1;
+          transform: translate(-50%, -50%);
+          background-image: url("../../../ban.png");
+          background-size: cover;
+          display: block;
+          z-index: 100;
+        }
+      }
 
       .left {
         transform: rotate(180deg);

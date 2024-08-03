@@ -58,6 +58,7 @@ const Filter = () => {
               name="type"
               defaultValue={query.type}
             >
+              <option value="">Tất cả</option>
               <option value="buy">Mua</option>
               <option value="rent">Thuê</option>
             </Form.Select>
@@ -70,6 +71,7 @@ const Filter = () => {
               name="property"
               defaultValue={query.property}
             >
+              <option value="">Tất cả</option>
               <option value="apartment">Căn hộ</option>
               <option value="house">Nhà</option>
               <option value="townhouse">Nhà phố</option>

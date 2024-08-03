@@ -20,7 +20,7 @@ const Slider = ({ images }) => {
       <IconContext.Provider value={{ size: "50px", color: "white" }}>
         {imageIndex !== null && (
           <div className="fullSlider">
-            <div className="arrow">
+            <div className={images.length > 1 ? "arrow" : "arrow disabled"}>
               <RiArrowRightDoubleFill
                 className="left"
                 onClick={() => changeSlide("left")}
@@ -29,7 +29,7 @@ const Slider = ({ images }) => {
             <div className="fullImage">
               <img src={images[imageIndex]} alt="" />
             </div>
-            <div className="arrow">
+            <div className={images.length > 1 ? "arrow" : "arrow disabled"}>
               <RiArrowRightDoubleFill onClick={() => changeSlide("right")} />
             </div>
             <div className="close">
@@ -39,18 +39,24 @@ const Slider = ({ images }) => {
         )}
       </IconContext.Provider>
       <div className="bigImage">
-        <img src={images[0]} alt="" onClick={() => setImageIndex(0)} />
+        <img
+          src={images[0] ?? "../../../noImage.png"}
+          alt=""
+          onClick={() => setImageIndex(0)}
+        />
       </div>
-      <div className="smallImage">
-        {images.slice(1).map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt=""
-            onClick={() => setImageIndex(index + 1)}
-          />
-        ))}
-      </div>
+      {images.length > 1 && (
+        <div className="smallImage">
+          {images.slice(1, 4).map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt=""
+              onClick={() => setImageIndex(index + 1)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

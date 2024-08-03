@@ -182,15 +182,15 @@ function NewPostPage() {
               <input min={0} id="size" name="size" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="school">Cách trường học (km)</label>
+              <label htmlFor="school">Cách trường học (m)</label>
               <input min={0} id="school" name="school" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="bus">Cách xe buýt (km)</label>
+              <label htmlFor="bus">Cách xe buýt (m)</label>
               <input min={0} id="bus" name="bus" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="restaurant">Cách nhà hàng (km)</label>
+              <label htmlFor="restaurant">Cách nhà hàng (m)</label>
               <input min={0} id="restaurant" name="restaurant" type="number" />
             </div>
             <button className="sendButton">Thêm mới</button>

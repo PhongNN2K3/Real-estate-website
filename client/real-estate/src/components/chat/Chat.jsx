@@ -1,119 +1,123 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IconContext } from "react-icons";
 import { FaXmark } from "react-icons/fa6";
 import { PiPaperPlaneTilt } from "react-icons/pi";
+import { format, register } from "timeago.js";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 import "./chat.scss";
 
-const Chat = () => {
-  const [chat, setChat] = useState(false);
+// Định nghĩa ngôn ngữ tiếng Việt
+const localeFunc = (number, index, totalSec) =>
+  [
+    ["vừa xong", "một lúc"],
+    ["%s giây trước", "trong %s giây"],
+    ["1 phút trước", "trong 1 phút"],
+    ["%s phút trước", "trong %s phút"],
+    ["1 giờ trước", "trong 1 giờ"],
+    ["%s giờ trước", "trong %s giờ"],
+    ["1 ngày trước", "trong 1 ngày"],
+    ["%s ngày trước", "trong %s ngày"],
+    ["1 tuần trước", "trong 1 tuần"],
+    ["%s tuần trước", "trong %s tuần"],
+    ["1 tháng trước", "trong 1 tháng"],
+    ["%s tháng trước", "trong %s tháng"],
+    ["1 năm trước", "trong 1 năm"],
+    ["%s năm trước", "trong %s năm"],
+  ][index];
+
+// Đăng ký ngôn ngữ tiếng Việt với timeago.js
+register("vi", localeFunc);
+
+const Chat = ({ chats }) => {
+  const [chat, setChat] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+
+  const handleOpenChat = async (id, receiver) => {
+    try {
+      const res = await apiRequest.get("/chats/" + id);
+      setChat({ ...res.data, receiver });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const text = formData.get("text");
+
+    if (!text) return;
+    try {
+      const res = await apiRequest.post("/messages/" + chat.id, {
+        text,
+      });
+      setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+      e.target.reset();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="chat">
       <div className="messages">
         <h2>Tin nhắn</h2>
-        <div onClick={() => setChat(true)} className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-          <div className="text">
-            <span>John Dee</span>
-            <p>Hi, how are you?</p>
-          </div>
-        </div>
+        {chats?.map((chat) => {
+          return (
+            <div
+              onClick={() => handleOpenChat(chat.id, chat.receiver)}
+              className="message"
+              key={chat.id}
+            >
+              <img src={chat.receiver.avatar ?? "../../../noAvatar.png"} />
+              <div className="text">
+                <span>{chat.receiver.username}</span>
+                <p
+                  className={chat.seenBy.includes(currentUser.id) ? "" : "seen"}
+                >
+                  {chat.lastMessage}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
       {chat && (
         <div className="chatbox">
           <IconContext.Provider value={{ size: "24px" }}>
             <div className="top">
               <div className="user">
-                <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-                <span>John Dee</span>
+                <img src={chat.receiver.avatar ?? "../../../noAvatar.png"} />
+                <span>{chat.receiver.username}</span>
               </div>
-              <div onClick={() => setChat(false)} className="close">
+              <div onClick={() => setChat(null)} className="close">
                 <FaXmark />
               </div>
             </div>
             <div className="middle">
-              <div className="chatMessage">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage own">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage own">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage own">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage own">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
-              <div className="chatMessage own">
-                <p>How are you?</p>
-                <span>1 min ago</span>
-              </div>
+              {chat.messages.map((message) => {
+                return (
+                  <div
+                    className={
+                      message.userId !== currentUser.id
+                        ? "chatMessage"
+                        : "chatMessage own"
+                    }
+                    key={message.id}
+                  >
+                    <p>{message.text}</p>
+                    <span>{format(message.createdAt, "vi")}</span>
+                  </div>
+                );
+              })}
             </div>
-            <div className="bottom">
-              <textarea></textarea>
-              <div className="send">
+            <form className="bottom" onSubmit={handleSendMessage}>
+              <textarea name="text"></textarea>
+              <button type="submit" className="send">
                 <PiPaperPlaneTilt />
-              </div>
-            </div>
+              </button>
+            </form>
           </IconContext.Provider>
         </div>
       )}
