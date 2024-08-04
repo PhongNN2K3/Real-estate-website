@@ -5,31 +5,36 @@ import "./uploadWidget.scss";
 const CloudinaryScriptContext = createContext();
 
 function UploadWidget({ uwConfig, setState }) {
-  const [loaded, setLoaded] = useState(false);
   const [widget, setWidget] = useState(null);
 
   useEffect(() => {
-    // Check if the script is already loaded
-    if (!loaded) {
-      const uwScript = document.getElementById("uw");
-      if (!uwScript) {
-        // If not loaded, create and load the script
+    const loadScript = () => {
+      return new Promise((resolve, reject) => {
         const script = document.createElement("script");
-        script.setAttribute("async", "");
-        script.setAttribute("id", "uw");
         script.src = "https://upload-widget.cloudinary.com/global/all.js";
-        script.addEventListener("load", () => setLoaded(true));
+        script.id = "uw";
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Failed to load script"));
         document.body.appendChild(script);
-      } else {
-        // If already loaded, update the state
-        setLoaded(true);
-      }
-    }
-  }, [loaded]);
+      });
+    };
 
-  useEffect(() => {
-    if (loaded && !widget) {
-      // Initialize Cloudinary Widget when script is loaded
+    if (!document.getElementById("uw")) {
+      loadScript()
+        .then(() => {
+          initializeWidget();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      initializeWidget();
+    }
+  }, []);
+
+  const initializeWidget = () => {
+    if (window.cloudinary) {
       const myWidget = window.cloudinary.createUploadWidget(
         uwConfig,
         (error, result) => {
@@ -40,17 +45,21 @@ function UploadWidget({ uwConfig, setState }) {
         }
       );
       setWidget(myWidget);
+    } else {
+      console.error("Cloudinary script is not loaded yet");
     }
-  }, [loaded, uwConfig, setState, widget]);
+  };
 
   const handleUploadClick = () => {
     if (widget) {
       widget.open();
+    } else {
+      console.error("Cloudinary Widget is not ready");
     }
   };
 
   return (
-    <CloudinaryScriptContext.Provider value={{ loaded }}>
+    <CloudinaryScriptContext.Provider value={{ widget }}>
       <button
         id="upload_widget"
         className="cloudinary-button"

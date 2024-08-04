@@ -54,7 +54,7 @@ const Profile = () => {
           <Suspense fallback={<p>Loading...</p>}>
             <Await
               resolve={data.postResponse}
-              errorElement={<p>Error loading loading items!</p>}
+              errorElement={<p>Error loading items!</p>}
             >
               {(postResponse) => <List posts={postResponse.data.userPosts} />}
             </Await>
@@ -66,7 +66,7 @@ const Profile = () => {
           <Suspense fallback={<p>Loading...</p>}>
             <Await
               resolve={data.postResponse}
-              errorElement={<p>Error loading loading items!</p>}
+              errorElement={<p>Error loading items!</p>}
             >
               {(postResponse) => <List posts={postResponse.data.savedPosts} />}
             </Await>
@@ -78,7 +78,7 @@ const Profile = () => {
           <Suspense fallback={<p>Loading...</p>}>
             <Await
               resolve={data.chatResponse}
-              errorElement={<p>Error loading loading items!</p>}
+              errorElement={<p>Error loading chats!</p>}
             >
               {(chatResponse) => <Chat chats={chatResponse.data} />}
             </Await>

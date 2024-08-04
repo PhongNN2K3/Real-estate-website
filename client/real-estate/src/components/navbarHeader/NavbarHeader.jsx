@@ -4,11 +4,18 @@ import { IconContext } from "react-icons";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { useNotificationStore } from "../../lib/notificationStore";
 import "./navbarHeader.scss";
 
 const NavbarHeader = () => {
   const [show, setShow] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const fetch = useNotificationStore((state) => state.fetch);
+  const number = useNotificationStore((state) => state.number);
+
+  if (currentUser) {
+    fetch();
+  }
 
   return (
     <div className="header">
@@ -51,7 +58,7 @@ const NavbarHeader = () => {
             <span className="username">{currentUser.username}</span>
             <Nav.Link className="profile-container" as={Link} to="/profile">
               <div className="profile">
-                <div className="notification">3</div>
+                {number > 0 && <div className="notification">{number}</div>}
                 <span>Profile</span>
               </div>
             </Nav.Link>
@@ -81,20 +88,29 @@ const NavbarHeader = () => {
         <div className={`menu ${show ? "active" : ""}`}>
           <Nav className="me-auto menu-items">
             <Nav.Link as={Link} to="/">
-              Home
+              Trang chủ
             </Nav.Link>
             <Nav.Link as={Link} to="/about">
-              About
+              Giới thiệu
             </Nav.Link>
             <Nav.Link as={Link} to="/contact">
-              Contact
+              Liên hệ
             </Nav.Link>
-            <Nav.Link as={Link} to="/login">
-              Sign in
-            </Nav.Link>
-            <Nav.Link as={Link} to="/signup">
-              Sign up
-            </Nav.Link>
+            {currentUser && (
+              <Nav.Link as={Link} to="/profile">
+                Profile
+              </Nav.Link>
+            )}
+            {!currentUser && (
+              <Nav.Link as={Link} to="/login">
+                Đăng nhập
+              </Nav.Link>
+            )}
+            {!currentUser && (
+              <Nav.Link as={Link} to="/signup">
+                Đăng ký
+              </Nav.Link>
+            )}
           </Nav>
         </div>
       </div>

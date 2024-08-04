@@ -1,10 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { FaXmark } from "react-icons/fa6";
 import { PiPaperPlaneTilt } from "react-icons/pi";
 import { format, register } from "timeago.js";
 import { AuthContext } from "../../context/AuthContext";
+import { SocketIoContext } from "../../context/SocketIoContext";
 import apiRequest from "../../lib/apiRequest";
+import { useNotificationStore } from "../../lib/notificationStore";
 import "./chat.scss";
 
 // Định nghĩa ngôn ngữ tiếng Việt
@@ -32,10 +34,17 @@ register("vi", localeFunc);
 const Chat = ({ chats }) => {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const scrollRef = useRef(null);
+  const inputRef = useRef(null);
+  const { socketIo } = useContext(SocketIoContext);
+  const decrease = useNotificationStore((state) => state.decrease);
 
   const handleOpenChat = async (id, receiver) => {
     try {
       const res = await apiRequest.get("/chats/" + id);
+      if (!res.data.seenBy.includes(currentUser.id)) {
+        decrease();
+      }
       setChat({ ...res.data, receiver });
     } catch (error) {
       console.error(error);
@@ -54,29 +63,67 @@ const Chat = ({ chats }) => {
       });
       setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
       e.target.reset();
+      inputRef.current.focus();
+      socketIo.emit("sendMessage", {
+        receiverId: chat.receiver.id,
+        data: res.data,
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
+  useEffect(() => {
+    scrollRef.current?.scrollBy({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [chat?.messages]);
+
+  useEffect(() => {
+    const read = async () => {
+      try {
+        await apiRequest.put("/chats/read/" + chat.id);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (chat && socketIo) {
+      socketIo.on("getMessage", (data) => {
+        if (data.chatId === chat.id) {
+          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+          read();
+        }
+      });
+    }
+    return () => {
+      socketIo.off("getMessage");
+    };
+  }, [chat, socketIo]);
+
   return (
     <div className="chat">
       <div className="messages">
         <h2>Tin nhắn</h2>
-        {chats?.map((chat) => {
+        {chats?.map((ch) => {
           return (
             <div
-              onClick={() => handleOpenChat(chat.id, chat.receiver)}
+              onClick={() => handleOpenChat(ch.id, ch.receiver)}
               className="message"
-              key={chat.id}
+              key={ch.id}
             >
-              <img src={chat.receiver.avatar ?? "../../../noAvatar.png"} />
+              <img src={ch.receiver.avatar ?? "../../../noAvatar.png"} />
               <div className="text">
-                <span>{chat.receiver.username}</span>
+                <span>{ch.receiver.username}</span>
                 <p
-                  className={chat.seenBy.includes(currentUser.id) ? "" : "seen"}
+                  className={
+                    ch.seenBy.includes(currentUser.id) || chat?.id !== ch.id
+                      ? ""
+                      : "seen"
+                  }
                 >
-                  {chat.lastMessage}
+                  {ch.lastMessage}
                 </p>
               </div>
             </div>
@@ -95,7 +142,7 @@ const Chat = ({ chats }) => {
                 <FaXmark />
               </div>
             </div>
-            <div className="middle">
+            <div ref={scrollRef} className="middle">
               {chat.messages.map((message) => {
                 return (
                   <div
@@ -113,7 +160,7 @@ const Chat = ({ chats }) => {
               })}
             </div>
             <form className="bottom" onSubmit={handleSendMessage}>
-              <textarea name="text"></textarea>
+              <textarea ref={inputRef} name="text"></textarea>
               <button type="submit" className="send">
                 <PiPaperPlaneTilt />
               </button>
